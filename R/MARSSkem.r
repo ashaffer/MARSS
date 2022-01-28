@@ -734,9 +734,9 @@ MARSSkem <- function(MLEobj) {
         Mt <- AdjM
         IId.tm <- IIm # t=0; no w's
         IId <- makediag(1 - diag.Q) # only can be w free if Q==0
-        if (any(diag.Q == 0) & any(diag.Q != 0)) { # which did not pick up a zero from B
-          IId[diag.Q == 0, diag.Q == 0][1 + 0:(nQ0 - 1) * (nQ0 + 1)] <- apply(Mt[diag.Q == 0, diag.Q != 0, drop = FALSE] == 0, 1, all)
-        }
+        # if (any(diag.Q == 0) & any(diag.Q != 0)) { # which did not pick up a zero from B
+        #   IId[diag.Q == 0, diag.Q == 0][1 + 0:(nQ0 - 1) * (nQ0 + 1)] <- apply(Mt[diag.Q == 0, diag.Q != 0, drop = FALSE] == 0, 1, all)
+        # }
         # x_1-B(I-Id)xtm-B Id (B* E.x0 + f*)-fU; f*=0, B*=I; xtm=E.x0 so reduces to the following
         Delta3 <- kf$xtT[, 1, drop = FALSE] - B %*% E.x0 - fU
         Delta4 <- dU # since IId.tm and Bstar.tm are IIm
@@ -776,8 +776,8 @@ MARSSkem <- function(MLEobj) {
           IId.tm <- IId
           IId <- makediag(1 - diag.Q) # only can be w free if Q==0
           if (any(diag.Q == 0) & any(diag.Q != 0)) {
-            Mt <- AdjM %*% Mt
             IId[diag.Q == 0, diag.Q == 0][1 + 0:(nQ0 - 1) * (nQ0 + 1)] <- apply(Mt[diag.Q == 0, diag.Q != 0, drop = FALSE] == 0, 1, all)
+            Mt <- AdjM %*% Mt            
           }
         }
         if (any(IId == 1)) {
